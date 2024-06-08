@@ -10,7 +10,7 @@
 
 ### 第三方 Pixiv 客户端
 
-一个完全由 [Jetpack Compose](https://developer.android.com/develop/ui/compose) 编写的第三方 Pixiv 应用
+一个完全由 [Jetpack Compose + Kotlin Multiplatform](https://developer.android.com/develop/ui/compose) 编写的第三方 Pixiv 应用
 
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.0-blue.svg?logo=kotlin)](https://kotlinlang.org)
 
@@ -60,7 +60,7 @@
 
 ## 星标历史
 
-[![Star History](https://starchart.cc/master-lzh/PiPixiv-KMP.svg?variant=adaptive)](https://starchart.cc/master-lzh/PiPixiv)
+[![Star History](https://starchart.cc/master-lzh/PiPixiv-KMP.svg?variant=adaptive)](https://starchart.cc/master-lzh/PiPixiv-KMP)
 
 ## 鸣谢
 

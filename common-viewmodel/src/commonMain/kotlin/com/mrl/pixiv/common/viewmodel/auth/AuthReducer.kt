@@ -1,0 +1,12 @@
+package com.mrl.pixiv.common.viewmodel.auth
+
+import com.mrl.pixiv.common.viewmodel.Reducer
+
+class AuthReducer : Reducer<AuthState, AuthAction> {
+    override fun reduce(state: AuthState, action: AuthAction): AuthState {
+        return when (action) {
+            is AuthAction.LoginSuccess -> state.copy(isLogin = true)
+            else -> state
+        }
+    }
+}

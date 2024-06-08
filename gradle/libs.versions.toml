@@ -1,0 +1,101 @@
+[versions]
+agp = "8.3.2"
+android-compileSdk = "34"
+android-minSdk = "21"
+android-targetSdk = "34"
+androidx-activityCompose = "1.9.0"
+androidx-appcompat = "1.7.0"
+androidx-constraintlayout = "2.1.4"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.5.1"
+androidx-material = "1.12.0"
+androidx-test-junit = "1.1.5"
+
+com-google-android-material-material = "1.12.0"
+
+compose = "1.6.7"
+compose-plugin = "1.6.11"
+
+junit = "4.13.2"
+
+datastore = "1.1.1"
+
+koin = "3.6.0-Beta4"
+koinCompose = "1.2.0-Beta4"
+
+navigation = "2.7.0-alpha07"
+lifecycle = "2.8.1"
+coil3 = "3.0.0-alpha06"
+okio = "3.9.0"
+kermit = "2.0.3"
+webview = "1.9.8"
+calf = "0.4.1"
+
+[libraries]
+# Compose
+compose-gradle-plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-plugin" }
+
+# AndroidX
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
+
+splashscreen = "androidx.core:core-splashscreen:1.0.1"
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
+lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
+
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+# Koin
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koinCompose" }
+
+# Coil3
+coil3 = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3" }
+coil3-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil3" }
+coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil3-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+
+# Okio
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+okio-fakefilesystem = { group = "com.squareup.okio", name = "okio-fakefilesystem", version.ref = "okio" }
+
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "webview" }
+
+calf-permission = { group = "com.mohamedrejeb.calf", name = "calf-permissions", version.ref = "calf" }
+
+[bundles]
+lifecycle = ["lifecycle-common", "lifecycle-runtime"]
+viewmodel = ["lifecycle-viewmodel"]
+navigation = ["navigation-compose"]
+coil3 = ["coil3-core", "coil3-compose", "coil3-network-ktor"]
+koin = ["koin-core", "koin-android", "koin-compose", "koin-compose-viewmodel"]
+datastore = ["androidx-datastore", "androidx-datastore-preferences"]
+okio = ["okio"]
+calf = ["calf-permission"]
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

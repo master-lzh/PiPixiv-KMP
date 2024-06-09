@@ -32,7 +32,7 @@ actual fun Bitmap.saveToAlbum(
     fileName: String,
     type: PictureType,
     callback: (Boolean) -> Unit
-): Boolean {
+) {
     Image.makeFromBitmap(this).encodeToData()?.use { data ->
         val nsData = data.bytes.usePinned {
             memScoped {
@@ -81,7 +81,6 @@ actual fun Bitmap.saveToAlbum(
                     this.saveToAlbum(fileName, type, callback)
                 }
             }
-            return true
         }
 
         PHPhotoLibrary.sharedPhotoLibrary().performChanges({
@@ -100,7 +99,6 @@ actual fun Bitmap.saveToAlbum(
             callback(success)
         }
     }
-    return true
 }
 
 actual fun Bitmap.asComposeImage(): ImageBitmap = this.asComposeImageBitmap()

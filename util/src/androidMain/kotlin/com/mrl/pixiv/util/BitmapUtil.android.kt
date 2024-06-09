@@ -16,25 +16,28 @@ actual fun Bitmap.saveToAlbum(
     fileName: String,
     type: PictureType,
     callback: (Boolean) -> Unit
-): Boolean {
+) {
     val compressFormat = when (type) {
         PictureType.PNG -> android.graphics.Bitmap.CompressFormat.PNG
         PictureType.JPEG -> android.graphics.Bitmap.CompressFormat.JPEG
         PictureType.JPG -> android.graphics.Bitmap.CompressFormat.JPEG
     }
-    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-        .absolutePath
-        .let { path ->
-            val dir = path.toPath() / DOWNLOAD_DIR
-            dir.toFile().mkdirs()
-            val filePath = dir / "$fileName${type.extension}"
-            FileOutputStream(filePath.toFile()).use { out ->
-                if (compress(compressFormat, 100, out)) {
-                    return true
+    try {
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            .absolutePath
+            .let { path ->
+                val dir = path.toPath() / DOWNLOAD_DIR
+                dir.toFile().mkdirs()
+                val filePath = dir / "$fileName${type.extension}"
+                FileOutputStream(filePath.toFile()).use { out ->
+                    if (compress(compressFormat, 100, out)) {
+                        callback(true)
+                    }
                 }
             }
-        }
-    return false
+    } catch (_: Exception) {
+        callback(false)
+    }
 }
 
 actual fun Bitmap.asComposeImage(): ImageBitmap = this.asImageBitmap()

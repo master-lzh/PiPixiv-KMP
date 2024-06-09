@@ -1,7 +1,7 @@
 package com.mrl.pixiv.repository
 
 import com.mrl.pixiv.data.setting.SettingTheme
-import com.mrl.pixiv.datasource.local.SettingDataSource
+import com.mrl.pixiv.datasource.local.datastore.SettingDataSource
 import kotlinx.coroutines.flow.map
 
 class SettingRepository(

@@ -3,7 +3,7 @@ package com.mrl.pixiv.repository
 import com.mrl.pixiv.data.search.SearchAutoCompleteQuery
 import com.mrl.pixiv.data.search.SearchHistory
 import com.mrl.pixiv.data.search.SearchIllustQuery
-import com.mrl.pixiv.datasource.local.SearchDataSource
+import com.mrl.pixiv.datasource.local.datastore.SearchDataSource
 import com.mrl.pixiv.datasource.remote.SearchHttpService
 import com.mrl.pixiv.util.currentTimeMillis
 

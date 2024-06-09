@@ -1,12 +1,12 @@
-package com.mrl.pixiv.datasource.local
+package com.mrl.pixiv.datasource.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.mrl.pixiv.datasource.local.base.BaseDataSource
-import com.mrl.pixiv.datasource.local.base.dataStorePath
+import com.mrl.pixiv.datasource.local.datastore.base.BaseDataSource
+import com.mrl.pixiv.datasource.local.datastore.base.dataStorePath
 
 class UserAuthDataSource(
     userAuthDataStore: DataStore<Preferences>,

@@ -7,4 +7,5 @@ plugins {
     alias(kotlinx.plugins.compose.compiler) apply false
     id(kotlinx.plugins.multiplatform.get().pluginId) apply false
     alias(kotlinx.plugins.ksp) apply false
+    alias(libs.plugins.room) apply false
 }

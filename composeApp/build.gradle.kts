@@ -69,6 +69,9 @@ kotlin {
             implementation(kotlinx.datetime)
             // DataStore
             implementation(libs.bundles.datastore)
+
+            // Room
+            implementation(libs.bundles.room)
         }
         iosMain.dependencies {
             implementation(kotlinx.ktor.client.darwin)

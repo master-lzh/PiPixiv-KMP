@@ -116,6 +116,7 @@ import com.mrl.pixiv.picture.viewmodel.PictureAction
 import com.mrl.pixiv.picture.viewmodel.PictureDeeplinkViewModel
 import com.mrl.pixiv.picture.viewmodel.PictureState
 import com.mrl.pixiv.picture.viewmodel.PictureViewModel
+import com.mrl.pixiv.repository.IllustRepository
 import com.mrl.pixiv.util.OnScrollToBottom
 import com.mrl.pixiv.util.calculateImageSize
 import com.mrl.pixiv.util.convertUtcStringToLocalDateTime
@@ -128,6 +129,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pipixiv.feature.picture.generated.resources.Res
@@ -242,11 +244,6 @@ internal fun PictureScreen(
     }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    val shareLauncher = rememberShareLauncher {
-        scope.launch {
-            snackbarHostState.showSnackbar(getString(Res.string.sharing_success))
-        }
-    }
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val currPage =
         remember {
@@ -270,6 +267,13 @@ internal fun PictureScreen(
     var loading by rememberSaveable { mutableStateOf(false) }
     val readMediaImagePermission =
         rememberPermissionState(permission = Permission.ReadStorage)
+    val illustRepository = koinInject<IllustRepository>()
+    val shareLauncher = rememberShareLauncher {
+        loading = false
+        scope.launch {
+            snackbarHostState.showSnackbar(getString(Res.string.sharing_success))
+        }
+    }
 
     LaunchedEffect(currLongClickPic.second) {
         if (currLongClickPic.second.isNotEmpty()) {
@@ -880,7 +884,9 @@ internal fun PictureScreen(
                                         if (createShareImage(
                                                 currLongClickPic,
                                                 illust,
-                                                shareLauncher
+                                                shareLauncher,
+                                                illustRepository,
+                                                context,
                                             )
                                         ) return@launch
                                         loading = false

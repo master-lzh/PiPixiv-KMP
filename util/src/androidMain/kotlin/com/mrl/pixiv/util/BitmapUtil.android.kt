@@ -15,7 +15,7 @@ actual typealias Bitmap = android.graphics.Bitmap
 actual fun Bitmap.saveToAlbum(
     fileName: String,
     type: PictureType,
-    callback: (Boolean) -> Unit
+    callback: (Boolean, String) -> Unit
 ) {
     val compressFormat = when (type) {
         PictureType.PNG -> android.graphics.Bitmap.CompressFormat.PNG
@@ -31,12 +31,12 @@ actual fun Bitmap.saveToAlbum(
                 val filePath = dir / "$fileName${type.extension}"
                 FileOutputStream(filePath.toFile()).use { out ->
                     if (compress(compressFormat, 100, out)) {
-                        callback(true)
+                        callback(true, filePath.toString())
                     }
                 }
             }
     } catch (_: Exception) {
-        callback(false)
+        callback(false, "")
     }
 }
 

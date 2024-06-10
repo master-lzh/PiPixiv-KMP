@@ -31,7 +31,7 @@ actual typealias Bitmap = org.jetbrains.skia.Bitmap
 actual fun Bitmap.saveToAlbum(
     fileName: String,
     type: PictureType,
-    callback: (Boolean) -> Unit
+    callback: (Boolean, String) -> Unit
 ) {
     Image.makeFromBitmap(this).encodeToData()?.use { data ->
         val nsData = data.bytes.usePinned {
@@ -59,6 +59,7 @@ actual fun Bitmap.saveToAlbum(
         } else {
             null
         }
+        var identifier: String? = null
         if (assetCollection == null) {
             PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                 assetCollection = if (fetchResult.count > 0u) {
@@ -92,11 +93,12 @@ actual fun Bitmap.saveToAlbum(
                 val addAssetRequest =
                     PHAssetCollectionChangeRequest.changeRequestForAssetCollection(it)
                 createAssetRequest.placeholderForCreatedAsset?.let { placeholder ->
+                    identifier = placeholder.localIdentifier
                     addAssetRequest?.addAssets(NSArray.create(listOf(placeholder)))
                 }
             }
         }) { success, _ ->
-            callback(success)
+            callback(success, identifier ?: "")
         }
     }
 }

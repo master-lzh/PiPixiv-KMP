@@ -13,6 +13,7 @@ import com.mrl.pixiv.common.viewmodel.follow.FollowViewModel
 import com.mrl.pixiv.common.viewmodel.illust.IllustMiddleware
 import com.mrl.pixiv.common.viewmodel.illust.IllustReducer
 import com.mrl.pixiv.common.viewmodel.illust.IllustViewModel
+import com.mrl.pixiv.datasource.local.database.di.provideDownloadDatabase
 import com.mrl.pixiv.datasource.local.datastore.SearchDataSource
 import com.mrl.pixiv.datasource.local.datastore.SettingDataSource
 import com.mrl.pixiv.datasource.local.datastore.UserAuthDataSource
@@ -189,6 +190,10 @@ private val reducerModule = module {
     singleOf(::IllustReducer)
 }
 
+val databaseModule = module {
+    single { provideDownloadDatabase() }
+}
+
 val allModule = listOf(
     appModule,
     viewModelModule,
@@ -196,7 +201,8 @@ val allModule = listOf(
     datasourceModule,
     useCaseModule,
     middlewareModule,
-    reducerModule
+    reducerModule,
+    databaseModule,
 )
 
 fun provideApiHttpClient(

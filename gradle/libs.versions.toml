@@ -20,6 +20,9 @@ junit = "4.13.2"
 
 datastore = "1.1.1"
 
+room = "2.7.0-alpha03"
+sqlite = "2.5.0-alpha03"
+
 koin = "3.6.0-Beta4"
 koinCompose = "1.2.0-Beta4"
 
@@ -52,6 +55,10 @@ android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref 
 
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
 lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
@@ -94,8 +101,10 @@ koin = ["koin-core", "koin-android", "koin-compose", "koin-compose-viewmodel"]
 datastore = ["androidx-datastore", "androidx-datastore-preferences"]
 okio = ["okio"]
 calf = ["calf-permission"]
+room = ["androidx-room-runtime", "androidx-sqlite-bundled"]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+room = { id = "androidx.room", version.ref = "room" }

@@ -12,6 +12,7 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":datasource"))
             implementation(project(":domain"))
             implementation(project(":util"))
             implementation(project(":network"))

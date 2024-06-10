@@ -5,12 +5,15 @@ import com.mrl.pixiv.data.illust.IllustBookmarkDeleteReq
 import com.mrl.pixiv.data.illust.IllustDetailQuery
 import com.mrl.pixiv.data.illust.IllustRecommendedQuery
 import com.mrl.pixiv.data.illust.IllustRelatedQuery
+import com.mrl.pixiv.datasource.local.database.DownloadDatabase
+import com.mrl.pixiv.datasource.local.database.DownloadEntity
 import com.mrl.pixiv.datasource.remote.IllustHttpService
 import com.mrl.pixiv.datasource.remote.UgoiraHttpService
 
 class IllustRepository(
     private val illustHttpService: IllustHttpService,
     private val ugoiraHttpService: UgoiraHttpService,
+    private val downloadDatabase: DownloadDatabase,
 ) {
     suspend fun getIllustRecommended(illustRecommendedQuery: IllustRecommendedQuery) =
         illustHttpService.getIllustRecommended(illustRecommendedQuery)
@@ -37,4 +40,11 @@ class IllustRepository(
 
     suspend fun getIllustBookmarkDetail(illustId: Long) =
         illustHttpService.getIllustBookmarkDetail(illustId)
+
+
+    suspend fun insertDownload(downloadEntity: DownloadEntity) =
+        downloadDatabase.downloadDao().insertDownload(downloadEntity)
+
+    suspend fun queryDownload(illustId: Long, picIndex: Int) =
+        downloadDatabase.downloadDao().queryDownload(illustId, picIndex)
 }

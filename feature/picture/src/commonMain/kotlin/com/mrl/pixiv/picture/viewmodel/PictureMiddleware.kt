@@ -12,11 +12,13 @@ import com.mrl.pixiv.data.illust.IllustBookmarkDeleteReq
 import com.mrl.pixiv.data.illust.IllustDetailQuery
 import com.mrl.pixiv.data.illust.IllustRelatedQuery
 import com.mrl.pixiv.data.user.UserIllustsQuery
+import com.mrl.pixiv.datasource.local.database.DownloadEntity
 import com.mrl.pixiv.network.HttpManager
 import com.mrl.pixiv.repository.IllustRepository
 import com.mrl.pixiv.repository.SearchRepository
 import com.mrl.pixiv.repository.UserRepository
 import com.mrl.pixiv.util.PictureType
+import com.mrl.pixiv.util.currentTimeMillis
 import com.mrl.pixiv.util.parseImageResult
 import com.mrl.pixiv.util.saveToAlbum
 import kotlinx.coroutines.withTimeoutOrNull
@@ -171,9 +173,23 @@ class PictureMiddleware(
                 return@launchNetwork
             }
             val bitmap = parseImageResult(result)
-            bitmap?.saveToAlbum("${illustId}_$index", PictureType.PNG) {
-                downloadCallback(it)
-                dispatchError(Exception(if (it) downloadSuccess else downloadFailed))
+            bitmap?.saveToAlbum("${illustId}_$index", PictureType.PNG) { success, path ->
+                downloadCallback(success)
+                if (success) {
+                    launchIO {
+                        illustRepository.insertDownload(
+                            DownloadEntity(
+                                illustId = illustId,
+                                picIndex = index,
+                                title = "",
+                                url = originalUrl,
+                                path = path,
+                                createTime = currentTimeMillis(),
+                            )
+                        )
+                    }
+                }
+                dispatchError(Exception(if (success) downloadSuccess else downloadFailed))
             }
         }
     }

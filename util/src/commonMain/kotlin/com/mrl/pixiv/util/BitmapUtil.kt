@@ -31,7 +31,7 @@ expect class Bitmap
 expect fun Bitmap.saveToAlbum(
     fileName: String,
     type: PictureType,
-    callback: (Boolean) -> Unit = {}
+    callback: (Boolean, String) -> Unit = { _, _ -> }
 )
 
 expect fun Bitmap.asComposeImage(): ImageBitmap

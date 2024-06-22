@@ -26,7 +26,7 @@ kotlin {
             implementation(kotlinx.bundles.serialization)
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.okio)
-            implementation(libs.bundles.room)
+            api(libs.bundles.room)
         }
     }
 }

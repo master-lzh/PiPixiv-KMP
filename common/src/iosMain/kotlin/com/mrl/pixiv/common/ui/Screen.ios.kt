@@ -4,15 +4,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
-import platform.UIKit.UIDevice
-import platform.UIKit.UIDeviceOrientation
+import platform.UIKit.UIApplication
+import platform.UIKit.UIInterfaceOrientationLandscapeLeft
+import platform.UIKit.UIInterfaceOrientationLandscapeRight
+import platform.UIKit.UIInterfaceOrientationPortrait
+import platform.UIKit.UIInterfaceOrientationPortraitUpsideDown
+import platform.UIKit.UIWindow
 
 @Composable
-actual fun getOrientation(): Orientation = when (UIDevice.currentDevice.orientation) {
-    UIDeviceOrientation.UIDeviceOrientationLandscapeLeft, UIDeviceOrientation.UIDeviceOrientationLandscapeRight -> Orientation.Horizontal
-    UIDeviceOrientation.UIDeviceOrientationPortrait, UIDeviceOrientation.UIDeviceOrientationPortraitUpsideDown -> Orientation.Vertical
-    else -> Orientation.Vertical
-}
+actual fun getOrientation(): Orientation =
+    (UIApplication.sharedApplication.windows.first() as? UIWindow)?.windowScene?.interfaceOrientation?.let {
+        when (it) {
+            UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight -> Orientation.Horizontal
+            UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown -> Orientation.Vertical
+            else -> Orientation.Vertical
+        }
+    } ?: Orientation.Vertical
 
 @Composable
 actual fun getScreenWidth(): Dp = with(LocalDensity.current) {

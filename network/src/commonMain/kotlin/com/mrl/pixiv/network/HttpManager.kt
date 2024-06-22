@@ -7,14 +7,21 @@ import com.mrl.pixiv.domain.auth.RefreshUserAccessTokenUseCase
 import com.mrl.pixiv.repository.SettingRepository
 import com.mrl.pixiv.repository.UserRepository
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLProtocol
 import io.ktor.utils.io.core.toByteArray
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate.Formats.ISO
 import kotlinx.datetime.LocalDateTime
@@ -197,6 +204,23 @@ class HttpManager(
                 defaultRequest {
                     url("https://${if (enableBypassSniffing) API_HOST else hostMap[API_HOST]}")
                     accept(ContentType.Application.Json)
+                }
+                HttpResponseValidator {
+                    handleResponseExceptionWithRequest { cause, request ->
+                        val tokenExpiredException = cause as? ClientRequestException
+                            ?: return@handleResponseExceptionWithRequest
+                        if (tokenExpiredException.response.status == HttpStatusCode.Unauthorized) {
+                            runBlocking(Dispatchers.IO) {
+                                refreshUserAccessTokenUseCase {
+                                    token = it
+                                }
+                            }
+                        }
+                    }
+                }
+                install(HttpRequestRetry) {
+                    retryOnServerErrors(maxRetries = 3)
+                    exponentialDelay()
                 }
             }
         }
